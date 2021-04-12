@@ -1,2 +1,2 @@
-# chess_android
+# chess_webgl
 chess android multiplayer game
