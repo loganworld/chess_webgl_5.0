@@ -50,7 +50,7 @@ public class MultiMenuManager : MonoBehaviour
 
         socket = SocketIOController.instance;
 
-        socket.Connect();
+        //socket.Connect();
 
         socket.On("show room", GetRooms);
         socket.On("createdRoom", OnCreatedRoom);
@@ -60,7 +60,6 @@ public class MultiMenuManager : MonoBehaviour
 
         socket.On("show transaction", ShowTransaction);
 
-        SocketIOController.instance.Emit("get balance", JsonUtility.ToJson(Global.m_user));
 
         // Global.m_user = new User(101,"qqq",103);
 
@@ -231,6 +230,7 @@ public class MultiMenuManager : MonoBehaviour
         {
             Debug.Log("get room list");
             socket.Emit("get room list", JsonUtility.ToJson(Global.m_user));
+            socket.Emit("get balance", JsonUtility.ToJson(Global.m_user));
         }
         else
         {

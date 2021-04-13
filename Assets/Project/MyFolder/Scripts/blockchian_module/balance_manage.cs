@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System;
 public class balance_manage : MonoBehaviour
 {
+    public TextMeshProUGUI username;
     public TextMeshProUGUI balance;
     public TMP_InputField address;
     public TMP_InputField toaddress;
@@ -20,6 +21,7 @@ public class balance_manage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        username.text = Global.m_user.name;
         socket = SocketIOController.instance;
         socket.On("sent balance", setbalance);
     }
@@ -31,8 +33,11 @@ public class balance_manage : MonoBehaviour
     }
     void balance_update()
     {
-        SocketIOController.instance.Emit("get balance", JsonUtility.ToJson(Global.m_user));
-        SocketIOController.instance.Emit("get transactions", JsonUtility.ToJson(Global.m_user));
+        if (Global.socketConnected)
+        {
+            SocketIOController.instance.Emit("get balance", JsonUtility.ToJson(Global.m_user));
+            SocketIOController.instance.Emit("get transactions", JsonUtility.ToJson(Global.m_user));
+        }
     }
 
     void setbalance(SocketIOEvent socketIOEvent)
